@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: multi-container-pod
+  labels:
+    app: demo
+spec:
+  containers:
+  - name: demo-container
+    image: gcr.io/k8s-k3s/demo:v1.0.0
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - mountPath: /shared-data
+      name: shared-volume
+  - name: busybox-container
+    image: busybox
+    command: ['sh', '-c', 'while true; do echo "Hello from BusyBox" > /shared-data/message; sleep 5; done']
+    volumeMounts:
+    - mountPath: /shared-data
+      name: shared-volume
+  volumes:
+  - name: shared-volume
+    emptyDir: {}
