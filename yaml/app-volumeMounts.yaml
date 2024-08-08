@@ -34,4 +34,4 @@ spec:
   volumes:
   - name: demo-storage
     hostPath:
-      path: /mnt/data
+      path: "/mnt/data"
